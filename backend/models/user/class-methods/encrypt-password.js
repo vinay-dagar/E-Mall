@@ -1,12 +1,8 @@
-const uuid = require('uuid');
 const crypto = require('crypto');
 
-module.exports = (value) => {
+module.exports = (salt, value) => {
     try {
-        const salt = uuid.v1()
-        const password = crypto.createHmac('sha256', salt).update(value).digest('hex');
-
-        return { salt, password }
+        return crypto.createHmac('sha256', salt).update(value).digest('hex');
     } catch (err) {
         throw new Error(err)
     }

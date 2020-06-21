@@ -97,6 +97,6 @@ const userSchema = new MongooseSchema({
     timestamp: true
 })
 
-Object.assign(userSchema.static, requireDirectory(module, 'class-methods'))
+Object.assign(userSchema.statics, requireDirectory(module, 'class-methods'))
 
 module.exports = DB.model('User', userSchema)
