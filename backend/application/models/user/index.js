@@ -1,6 +1,6 @@
-const beforeCreate = require('./hooks/before-create');
+const beforeSave = require('./hooks/before-save');
 
-const userSchema = new MongooseSchema({
+const UserSchema = new MongooseSchema({
     name: {
         type: String,
         required: true
@@ -32,8 +32,9 @@ const userSchema = new MongooseSchema({
         default: false
     },
     role: {
-        type: ObjectId,
-        ref: 'Role'
+        type: String,
+        enum: ['superAdmin', 'shopAdmin', 'user'],
+        default: 'user'
     },
     reviews: [
         {
@@ -96,6 +97,8 @@ const userSchema = new MongooseSchema({
     timestamp: true
 })
 
-Object.assign(userSchema.statics, requireDirectory(module, 'class-methods'))
+UserSchema.pre('save', beforeSave)
 
-module.exports = DB.model('User', userSchema)
+Object.assign(UserSchema.statics, requireDirectory(module, 'class-methods'))
+
+module.exports = DB.model('User', UserSchema)
