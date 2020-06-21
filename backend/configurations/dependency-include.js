@@ -6,7 +6,9 @@
  */
 
 global.requireDirectory = require('../utilities/require-directory');
-global.validate = require('express-validation');
+global.Validate = require('express-validation');
+
+global.Joi = require('joi');
 
 global.Mongoose = require('mongoose')
 global.MongooseSchema = Mongoose.Schema;

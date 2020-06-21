@@ -1,5 +1,3 @@
-const domain = require("../models");
-
 const uuid = require('uuid');
 
 exports.registerUser = async (req, res, next) => {
@@ -24,10 +22,10 @@ exports.registerUser = async (req, res, next) => {
             salt,
         }
 
-        const result = await new domain.User(userData).save();
+        const user = await new domain.User(userData).save();
 
         return res.status(200).json({
-            result,
+            user,
             message: "user created!"
         })
     } catch (err) {

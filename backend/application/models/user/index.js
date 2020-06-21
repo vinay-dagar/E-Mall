@@ -1,5 +1,4 @@
 const beforeCreate = require('./hooks/before-create');
-const requireDirectory = require('../../utilities/require-directory');
 
 const userSchema = new MongooseSchema({
     name: {

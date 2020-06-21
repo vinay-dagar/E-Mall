@@ -1,7 +1,12 @@
-const userController = require('../application/controllers');
+const controller = require('../application/controllers');
 const router = require('express').Router();
-const { validate } = require('express-validation');
+const validationSchema = require('../application/validation');
 
-router.post('/user/register', userController.registerUser);
+const { validate } = Validate
+
+router.post('/user/register',
+    validate(validationSchema.user.registerUser, {}, {}),
+    controller.user.registerUser
+);
 
 module.exports = router
