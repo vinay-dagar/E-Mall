@@ -12,7 +12,7 @@ global.Mongoose = require('mongoose')
 global.MongooseSchema = Mongoose.Schema;
 global.ObjectId = Mongoose.Types.ObjectId;
 
-global.domain = require('../models/index');
+global.domain = require('../application/models');
 
 const configHolder = {};
 
