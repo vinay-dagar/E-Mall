@@ -9,4 +9,9 @@ router.post('/user/register',
     controller.user.registerUser
 );
 
+router.post('/user/login',
+    validate(validationSchema.user.login, {}, {}),
+    controller.user.login
+);
+
 module.exports = router

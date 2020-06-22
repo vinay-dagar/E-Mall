@@ -27,7 +27,7 @@ const UserSchema = new MongooseSchema({
         type: Boolean,
         default: false
     },
-    isAccountDeactive: {
+    isAccountLocked: {
         type: Boolean,
         default: false
     },

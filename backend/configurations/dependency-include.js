@@ -18,4 +18,7 @@ global.domain = require('../application/models');
 
 const configHolder = {};
 
+configHolder.jwtUtility = require('../utilities/jwt-utility');
+configHolder.createSecret = require('../utilities/create-secret');
+
 module.exports = configHolder
