@@ -11,7 +11,7 @@ router.post('/user/register',
 
 router.post('/user/login',
     validate(validationSchema.user.login, {}, {}),
-    controller.user.login
+    controller.authentication.login
 );
 
 module.exports = router

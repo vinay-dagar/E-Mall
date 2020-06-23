@@ -100,5 +100,6 @@ const UserSchema = new MongooseSchema({
 UserSchema.pre('save', beforeSave)
 
 Object.assign(UserSchema.statics, requireDirectory(module, 'class-methods'))
+Object.assign(UserSchema.methods, requireDirectory(module, 'instance-methods'))
 
 module.exports = DB.model('User', UserSchema)
