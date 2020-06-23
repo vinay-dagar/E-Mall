@@ -20,7 +20,7 @@ const ProductSchema = new MongooseSchema({
     ],
     isInStock: {
         type: Boolean,
-        default: false
+        default: true
     },
     shop: {
         type: ObjectId,

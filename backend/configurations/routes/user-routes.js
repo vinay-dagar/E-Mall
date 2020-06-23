@@ -1,15 +1,15 @@
-const controller = require('../application/controllers');
 const router = require('express').Router();
-const validationSchema = require('../application/validation');
+const controller = require('../../application/controllers');
+const validationSchema = require('../../application/validation');
 
 const { validate } = Validate
 
-router.post('/user/register',
+router.post('/register',
     validate(validationSchema.user.registerUser, {}, {}),
     controller.user.registerUser
 );
 
-router.post('/user/login',
+router.post('/login',
     validate(validationSchema.user.login, {}, {}),
     controller.authentication.login
 );

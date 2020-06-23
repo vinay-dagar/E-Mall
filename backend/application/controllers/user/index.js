@@ -33,5 +33,3 @@ exports.registerUser = async (req, res, next) => {
         next(err)
     }
 }
-
-

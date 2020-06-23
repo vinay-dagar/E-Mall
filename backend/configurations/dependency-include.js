@@ -16,6 +16,8 @@ global.ObjectId = Mongoose.Types.ObjectId;
 
 global.domain = require('../application/models');
 
+global.middleware = require('../middlewares');
+
 const configHolder = {};
 
 configHolder.jwtUtility = require('../utilities/jwt-utility');

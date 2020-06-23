@@ -14,9 +14,11 @@ global.router = express.Router();
 global.app = app;
 
 global.configHolder = require('./configurations/dependency-include');
-const routes = require('./configurations/routes');
+const userRoutes = require('./configurations/routes/user-routes');
+const productRoutes = require('./configurations/routes/product-routes');
 
-app.use('/api/v1', routes)
+app.use('/api/v1/user', userRoutes)
+app.use('/api/v1/product', productRoutes)
 
 app.get('/', (req, res, next) => res.status(200).send('Service is running!'));
 

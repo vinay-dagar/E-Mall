@@ -24,7 +24,12 @@ exports.login = async (req, res, next) => {
         user = JSON.parse(JSON.stringify(user));
         user = omit(user, ['password', 'salt']);
 
-        const token = configHolder.jwtUtility.createToken(user._id)
+        const payload = {
+            userId: user._id,
+            type: "login"
+        }
+
+        const token = configHolder.jwtUtility.createToken(payload)
 
         if (!token) throw new Error('Token not generated!')
 

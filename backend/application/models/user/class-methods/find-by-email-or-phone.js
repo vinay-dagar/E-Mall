@@ -1,5 +1,3 @@
-const { use } = require("../../../../configurations/routes")
-
 module.exports = async (username) => {
     try {
         const user = await domain.User.findOne({
