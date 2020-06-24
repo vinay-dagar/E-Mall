@@ -1,4 +1,4 @@
-const beforeSave = require("./hooks/before-save")
+const afterSave = require("./hooks/after-save")
 
 const ProductSchema = new MongooseSchema({
     title: {
@@ -34,6 +34,6 @@ const ProductSchema = new MongooseSchema({
     timestamp: true
 })
 
-ProductSchema.post('update', beforeSave)
+ProductSchema.post('save', afterSave)
 
 module.exports = Mongoose.model('Product', ProductSchema)

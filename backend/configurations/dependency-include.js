@@ -22,5 +22,6 @@ const configHolder = {};
 
 configHolder.jwtUtility = require('../utilities/jwt-utility');
 configHolder.createSecret = require('../utilities/create-secret');
+configHolder.secureUtility = require('../utilities/secure-utility');
 
 module.exports = configHolder
