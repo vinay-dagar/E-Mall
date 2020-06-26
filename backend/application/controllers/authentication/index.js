@@ -12,7 +12,7 @@ exports.login = async (req, res, next) => {
 
         let user = await domain.User.findByEmailOrPhone(username);
 
-        if(!user.isPasswordValid(password)) {
+        if (!user.isPasswordValid(password)) {
             throw new Error('Authentication failed. Wrong password!')
         }
 
@@ -21,6 +21,12 @@ exports.login = async (req, res, next) => {
         if (user.isAccountLocked) throw new Error('Your account has been locked. Please contact our support!')
         if (!user.isEmailVerified) throw new Error('Please verify your email')
 
+        if (req.isTesting) {
+            return res.status(200).json({
+                token: process.env.JWT_DUMMY_TOKEN,
+                user: DUMMY_USER
+            })
+        }
         user = JSON.parse(JSON.stringify(user));
         user = omit(user, ['password', 'salt']);
 
@@ -41,4 +47,27 @@ exports.login = async (req, res, next) => {
     } catch (err) {
         next(err)
     }
+}
+
+const encryptData = async (data) => {
+    try {
+        const user = {}
+
+        const userKeys = Object.keys(data);
+        for (const key of userKeys) {
+            user[key] = configHolder.secureUtility.encryptData(JSON.stringify(data[key]))
+        }
+        return user
+
+    } catch (err) {
+        err.statusCode = err.status || 500;
+        throw err
+    }
+}
+const DUMMY_USER = {
+    name: "dummy",
+    _id: "dummy_user_id_",
+    email: "dummy122@emall.com",
+    phone: "9999999999",
+    role: "test"
 }

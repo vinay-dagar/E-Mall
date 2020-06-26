@@ -10,6 +10,7 @@ router.post('/register',
 );
 
 router.post('/login',
+    middleware.decrypt,
     validate(validationSchema.user.login, {}, {}),
     controller.authentication.login
 );

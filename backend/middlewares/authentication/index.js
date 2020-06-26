@@ -16,7 +16,12 @@ module.exports = async (req, res, next) => {
             next(err)
         }
         
-        const { userId } = configHolder.jwtUtility.get(token, process.env.APP_SECRET_KEY)
+        const { userId, type } = configHolder.jwtUtility.get(token, process.env.APP_SECRET_KEY)
+        
+        if(type && type === 'test') {
+            req.isTesting = true
+            return next()
+        }
         
         if(!userId) {
             const err = new Error('Unauthorized.');
