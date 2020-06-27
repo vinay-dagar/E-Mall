@@ -24,12 +24,21 @@ const ProductSchema = new MongooseSchema({
     },
     shop: {
         type: ObjectId,
-        ref: 'Shop'
+        ref: 'Shop',
+        required: true
     },
-    user: {
-        type: ObjectId,
-        ref: 'User'
-    }
+    reviews: [
+        {
+            type: ObjectId,
+            ref: 'Review'
+        }
+    ],
+    ratings: [
+        {
+            type: ObjectId,
+            ref: 'Rating'
+        }
+    ],
 }, {
     timestamp: true
 })

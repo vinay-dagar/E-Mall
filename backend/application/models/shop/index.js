@@ -1,3 +1,5 @@
+const afterSave = require('./hooks/after-save');
+
 const ShopSchema = new MongooseSchema({
     name: {
         type: String,
@@ -5,7 +7,8 @@ const ShopSchema = new MongooseSchema({
     },
     user: {
         type: ObjectId,
-        ref: 'User'
+        ref: 'User',
+        required: true
     },
     products: [
         {
@@ -22,5 +25,6 @@ const ShopSchema = new MongooseSchema({
 }, {
     timestamp: true
 })
+ShopSchema.post('save', afterSave)
 
 module.exports = Mongoose.model('Shop', ShopSchema)

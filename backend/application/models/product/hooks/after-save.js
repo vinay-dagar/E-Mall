@@ -1,7 +1,13 @@
 module.exports = async function (product) {
     try {
-        console.log({product})
-        return product;
+
+        await domain.Shop.findOneAndUpdate({ _id: product.shop }, {
+            $push: {
+                products: product
+            }
+        });
+
+        return Promise.resolve(product);
     } catch (err) {
         return Promise.reject(err);
     }

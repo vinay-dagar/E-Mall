@@ -1,4 +1,4 @@
-const beforeSave = require('./hooks/before-save');
+const afterSave = require('./hooks/after-save');
 
 const UserSchema = new MongooseSchema({
     name: {
@@ -33,57 +33,17 @@ const UserSchema = new MongooseSchema({
     },
     role: {
         type: String,
-        enum: ['superAdmin', 'shopAdmin', 'user'],
-        default: 'user'
+        enum: ['superAdmin', 'shopAdmin', 'customer'],
+        default: 'customer'
     },
-    reviews: [
-        {
-            type: ObjectId,
-            ref: 'Review'
-        }
-    ],
-    ratings: [
-        {
-            type: ObjectId,
-            ref: 'Rating'
-        }
-    ],
-    cart: {
+    customer: {
         type: ObjectId,
-        ref: 'Cart'
+        ref: 'Customer'
     },
-    products: [
-        {
-            type: ObjectId,
-            ref: 'Product'
-        }
-    ],
-    paymentMethods: [
-        {
-            type: ObjectId,
-            ref: 'PaymentMethod'
-        }
-    ],
-    rememberPayment: {
-        type: Boolean,
-        default: false
-    },
-    whishlist: [
-        {
-            type: ObjectId,
-            ref: 'Wishlist'
-        }
-    ],
     shop: {
         type: ObjectId,
         ref: 'Shop'
     },
-    orders: [
-        {
-            type: ObjectId,
-            ref: 'Order'
-        }
-    ],
     salt: {
         type: String,
         default: '',
@@ -97,9 +57,10 @@ const UserSchema = new MongooseSchema({
     timestamp: true
 })
 
-UserSchema.pre('save', beforeSave)
 
 Object.assign(UserSchema.statics, requireDirectory(module, 'class-methods'))
 Object.assign(UserSchema.methods, requireDirectory(module, 'instance-methods'))
+
+UserSchema.post('save', afterSave)
 
 module.exports = DB.model('User', UserSchema)

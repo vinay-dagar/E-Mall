@@ -1,6 +1,7 @@
 const User = require('./user');
 const Product = require('./product');
 const Shop = require('./shop');
+const Customer = require('./customer');
 const Cart = require('./cart');
 const Order = require('./order');
 const Review = require('./review');
@@ -18,6 +19,7 @@ const domain = {
     Rating,
     Wishlist,
     PaymentMethod,
+    Customer
 };
 
 module.exports = domain 

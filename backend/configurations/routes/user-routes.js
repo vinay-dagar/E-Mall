@@ -4,13 +4,13 @@ const validationSchema = require('../../application/validation');
 
 const { validate } = Validate
 
-router.post('/register',
+router.post('/register/:role',
     validate(validationSchema.user.registerUser, {}, {}),
     controller.user.registerUser
 );
 
 router.post('/login',
-    middleware.decrypt,
+    // middleware.decrypt,
     validate(validationSchema.user.login, {}, {}),
     controller.authentication.login
 );

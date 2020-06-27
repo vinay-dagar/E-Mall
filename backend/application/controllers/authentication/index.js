@@ -12,11 +12,15 @@ exports.login = async (req, res, next) => {
 
         let user = await domain.User.findByEmailOrPhone(username);
 
+        if (!user) {
+            const err = new Error('User not found. Please try again with different username')
+            err.statusCode = 404
+            next(err)
+        }
+
         if (!user.isPasswordValid(password)) {
             throw new Error('Authentication failed. Wrong password!')
         }
-
-        if (!user) throw new Error('User not found. Please try again!')
 
         if (user.isAccountLocked) throw new Error('Your account has been locked. Please contact our support!')
         if (!user.isEmailVerified) throw new Error('Please verify your email')
@@ -27,6 +31,15 @@ exports.login = async (req, res, next) => {
                 user: DUMMY_USER
             })
         }
+
+        if (user.role === 'shopAdmin') {
+            user = await domain.User.findById(user._id)
+                .populate('shop', '-user')
+        } else if (user.role === 'customer') {
+            user = await domain.User.findById(user._id).populate('customer', '-user')
+        }
+
+
         user = JSON.parse(JSON.stringify(user));
         user = omit(user, ['password', 'salt']);
 

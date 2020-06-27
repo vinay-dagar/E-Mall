@@ -13,7 +13,8 @@ exports.createProduct = async (req, res, next) => {
             title,
             price,
             description,
-            imageUrl
+            imageUrl,
+            shop: req.loggedInUser.shop
         }
 
         if(req.isTesting) {
