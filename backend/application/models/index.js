@@ -6,7 +6,7 @@ const Cart = require('./cart');
 // const Order = require('./order');
 const Review = require('./review');
 const Rating = require('./rating');
-// const Wishlist = require('./wishlist');
+const Wishlist = require('./wishlist');
 // const PaymentMethod = require('./payment-method');
 
 const domain = {
@@ -17,7 +17,7 @@ const domain = {
     // Order,
     Review,
     Rating,
-    // Wishlist,
+    Wishlist,
     // PaymentMethod,
     Customer
 };

@@ -1,4 +1,4 @@
-const { omit } = require('lodash')
+const { omit } = require('lodash');
 
 exports.login = async (req, res, next) => {
     try {
@@ -20,6 +20,10 @@ exports.login = async (req, res, next) => {
                     include: [
                         {
                             model: domain.Cart
+                        },
+                        {
+                            model: domain.Wishlist,
+                            include: [{ model: domain.Product }]
                         },
                     ]
                 },

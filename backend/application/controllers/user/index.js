@@ -44,3 +44,50 @@ exports.registerUser = async (req, res, next) => {
         next(err)
     }
 }
+
+exports.addToWishlist = async (req, res, next) => {
+    try {
+        const { productId } = req.params;
+
+        if (!productId)
+            throw new Error('Product not provided!')
+
+        const product = await domain.Product.findOne({
+            where: {
+                id: productId
+            }
+        });
+
+        if (!product) {
+            const err = new Error('Product not found!');
+            err.statusCode = 404
+            next(err)
+        };
+
+        const { Wishlists } = req.loggedInUser.Customer;
+
+        const isProductWishlisted = Wishlists.find(a => a.productId === productId)
+
+        if (isProductWishlisted) {
+            await domain.Wishlist.destroy({
+                where: {
+                    id: isProductWishlisted.id
+                }
+            })
+        } else {
+            const data = {
+                productId,
+                customerId: req.loggedInUser.Customer.id
+            }
+        }
+
+        await domain.Wishlist.create(data)
+
+        return res.status(200).json({
+            message: `Product successfully ${isProductWishlisted ? 'removed from' : 'added to'} wishlist`
+        })
+
+    } catch (err) {
+        next(err)
+    }
+}

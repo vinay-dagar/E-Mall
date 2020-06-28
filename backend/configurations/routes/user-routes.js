@@ -15,4 +15,10 @@ router.post('/login',
     controller.authentication.login
 );
 
+router.post('/wishlist/:productId',
+    middleware.authentication,
+    middleware.access.canAccess(['customer']),
+    controller.user.addToWishlist
+);
+
 module.exports = router

@@ -68,4 +68,22 @@ module.exports = function (domain) {
         foreignKey: 'ratingId'
     })
 
+    // ---------------- Wishlist --------------------------
+
+    domain.Wishlist.belongsTo(domain.Product, {
+        foreignKey: 'productId'
+    })
+
+    domain.Product.hasMany(domain.Wishlist, {
+        foreignKey: 'productId'
+    })
+
+    domain.Wishlist.belongsTo(domain.Customer, {
+        foreignKey: 'customerId'
+    })
+
+    domain.Customer.hasMany(domain.Wishlist, {
+        foreignKey: 'customerId'
+    })
+
 }
