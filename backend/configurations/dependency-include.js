@@ -10,9 +10,7 @@ global.Validate = require('express-validation');
 
 global.Joi = require('joi');
 
-global.Mongoose = require('mongoose')
-global.MongooseSchema = Mongoose.Schema;
-global.ObjectId = Mongoose.Types.ObjectId;
+global.Sequelize = require('sequelize')
 
 global.domain = require('../application/models');
 

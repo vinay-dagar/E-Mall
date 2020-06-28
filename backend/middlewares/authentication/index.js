@@ -29,8 +29,24 @@ module.exports = async (req, res, next) => {
             next(err)
         }
 
-        const user = await domain.User.findById(userId)
-            .populate('shop');
+        const user = await domain.User.findOne({
+            where: {
+                id: userId
+            },
+            include: [
+                {
+                    model: domain.Shop
+                },
+                {
+                    model: domain.Customer,
+                    include: [
+                        {
+                            model: domain.Cart
+                        }
+                    ]
+                },
+            ]
+        })
 
         if (!user) {
             const error = new Error('Unauthorised. user not found!')

@@ -3,7 +3,9 @@ module.exports = (function () {
         return async (req, res, next) => {
             try {
 
-                if(req.isTesting) {
+                const isAnonymous = access.includes('anonymous');
+
+                if (req.isTesting || isAnonymous) {
                     return next()
                 }
 

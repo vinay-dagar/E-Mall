@@ -4,7 +4,8 @@ const app = express();
 const cors = require('cors');
 const { ValidationError } = require('express-validation');
 
-global.MongooseConnect = require('./configurations/config')();
+global.SequelizeConnect = require('./configurations/config')();
+global.configHolder = require('./configurations/dependency-include');
 
 app.use(cors());
 app.use(bodyParser.json());
@@ -13,7 +14,6 @@ app.use(bodyParser.json());
 global.router = express.Router();
 global.app = app;
 
-global.configHolder = require('./configurations/dependency-include');
 const userRoutes = require('./configurations/routes/user-routes');
 const productRoutes = require('./configurations/routes/product-routes');
 

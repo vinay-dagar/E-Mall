@@ -1,4 +1,4 @@
-const mongoose = require('mongoose');
+const Sequlize = require('sequelize')
 const dotEnv = require('dotenv');
 
 const initApp = () => {
@@ -7,29 +7,49 @@ const initApp = () => {
     })
 };
 
+const checkConenction = (db) => {
+    db.authenticate().then(() => {
+        console.info('Successfully connected to database.');
+        initApp()
+    }).catch((err) => {
+        console.error('Could not connect to database!', err);
+    });
+}
+
 module.exports = () => {
     dotEnv.config({
         path: `${__dirname}/../env/${process.env.NODE_ENV}.env`
     })
-    mongoose.connect(process.env.DATABASE_URL, {
-        useNewUrlParser: true,
-        useUnifiedTopology: true,
-        socketTimeoutMS: 5000,
-    });
-    mongoose.set('debug', true)
+    const options = {
+        logging: process.env.ENABLE_DB_LOG === 'true',
+        dialect: 'mysql',
+        sync: process.env.DB_SYNC === 'true',
+        timezone: '+05:30',
+        pool: {
+            max: 10,
+            min: 0,
+            idle: 20000,
+            // acquire: 20000
+        },
+        dialectOptions: {
+            ssl: false,
+        },
+        define: {
+            underscored: true,
+            timestamps: true,
+        },
+    };
 
-    const db = mongoose.connection;
-    global.DB = db
+    const db = new Sequlize(process.env.DATABASE, process.env.DB_USERNAME, process.env.DB_PASSWORD, options)
 
-    db.on('error', (err) => {
-        console.error(err)
-    });
+    checkConenction(db)
 
-    db.on('open', () => {
-        console.log('Database connected!')
-        initApp()
-    })
-
+    if (process.env.DB_SYNC === 'true') {
+        const option = process.env.DB_SYNC_APPEND ? {
+            append: true
+        } : {};
+        db.sync(option);
+    }
 
     return db
 };

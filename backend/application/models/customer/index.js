@@ -1,62 +1,8 @@
-const afterSave = require('./hooks/after-save');
+const fields = require('./fields');
 
-const CustomerSchema = new MongooseSchema({
-    name: {
-        type: String,
-        required: true
-    },
-    user: {
-        type: ObjectId,
-        ref: 'User',
-        required: true
-    },
-    products: [
-        {
-            type: ObjectId,
-            ref: 'Product'
-        }
-    ],
-    orders: [
-        {
-            type: ObjectId,
-            ref: 'Order'
-        }
-    ],
-    cart: {
-        type: ObjectId,
-        ref: 'Cart'
-    },
-    reviews: [
-        {
-            type: ObjectId,
-            ref: 'Review'
-        }
-    ],
-    ratings: [
-        {
-            type: ObjectId,
-            ref: 'Rating'
-        }
-    ],
-    paymentMethods: [
-        {
-            type: ObjectId,
-            ref: 'PaymentMethod'
-        }
-    ],
-    rememberPayment: {
-        type: Boolean,
-        default: false
-    },
-    whishlist: [
-        {
-            type: ObjectId,
-            ref: 'Wishlist'
-        }
-    ],
-}, {
-    timestamp: true
-})
-CustomerSchema.post('save', afterSave)
+const customerSchema = SequelizeConnect.define('Customer', fields, {
+    tableName: 'customer',
+    hooks: requireDirectory(module, 'hooks')
+});
 
-module.exports = Mongoose.model('Customer', CustomerSchema)
+module.exports = customerSchema

@@ -1,24 +1,7 @@
-const CartSchema = new MongooseSchema({
-    items: {
-        type: Number,
-        default: 0
-    },
-    totalAmount: {
-        type: Number,
-        default: 0
-    },
-    user: {
-        type: ObjectId,
-        ref: 'User'
-    },
-    products: [
-        {
-            type: ObjectId,
-            ref: 'Product'
-        }
-    ]
-}, {
-    timestamp: true
+const fields = require('./fields');
+
+const cartSchema = SequelizeConnect.define('Cart', fields, {
+    tableName: 'cart'
 })
 
-module.exports = Mongoose.model('Cart', CartSchema)
+module.exports = cartSchema

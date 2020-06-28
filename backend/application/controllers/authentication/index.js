@@ -10,7 +10,24 @@ exports.login = async (req, res, next) => {
         if (!username) throw new Error('Usename is required');
         if (!password) throw new Error('Password is required');
 
-        let user = await domain.User.findByEmailOrPhone(username);
+        let user = await domain.User.findOne({
+            where: {
+                email: username
+            },
+            include: [
+                {
+                    model: domain.Customer,
+                    include: [
+                        {
+                            model: domain.Cart
+                        },
+                    ]
+                },
+                {
+                    model: domain.Shop
+                },
+            ]
+        });
 
         if (!user) {
             const err = new Error('User not found. Please try again with different username')
@@ -32,19 +49,11 @@ exports.login = async (req, res, next) => {
             })
         }
 
-        if (user.role === 'shopAdmin') {
-            user = await domain.User.findById(user._id)
-                .populate('shop', '-user')
-        } else if (user.role === 'customer') {
-            user = await domain.User.findById(user._id).populate('customer', '-user')
-        }
-
-
         user = JSON.parse(JSON.stringify(user));
         user = omit(user, ['password', 'salt']);
 
         const payload = {
-            userId: user._id,
+            userId: user.id,
             type: "login"
         }
 

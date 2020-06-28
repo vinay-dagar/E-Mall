@@ -1,30 +1,8 @@
-const afterSave = require('./hooks/after-save');
+const fields = require('./fields');
 
-const ShopSchema = new MongooseSchema({
-    name: {
-        type: String,
-        required: true
-    },
-    user: {
-        type: ObjectId,
-        ref: 'User',
-        required: true
-    },
-    products: [
-        {
-            type: ObjectId,
-            ref: 'Product'
-        }
-    ],
-    orders: [
-        {
-            type: ObjectId,
-            ref: 'Order'
-        }
-    ]
-}, {
-    timestamp: true
+const shopSchema = SequelizeConnect.define('Shop', fields, {
+    tableName: 'shop',
+    hooks: requireDirectory(module, 'hooks')
 })
-ShopSchema.post('save', afterSave)
 
-module.exports = Mongoose.model('Shop', ShopSchema)
+module.exports = shopSchema

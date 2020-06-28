@@ -9,11 +9,20 @@ router.post('/create',
     middleware.access.canAccess(['shopAdmin', 'superAdmin']),
     validate(validationSchema.product.createProduct, {}, {}),
     controller.product.createProduct
-);
+)
+    .get('/list',
+        middleware.access.canAccess(['anonymous']),
+        controller.product.getProductsList
+    )
+    .delete('/delete/:productId',
+        middleware.authentication,
+        middleware.access.canAccess(['shopAdmin', 'superAdmin']),
+        controller.product.deleteProduct
+    )
+    .get('/details/:productId',
+        middleware.access.canAccess(['anonymous']),
+        controller.product.getOneProduct
+    )
 
-// router.post('/login',
-//     validate(validationSchema.user.login, {}, {}),
-//     controller.authentication.login
-// );
 
 module.exports = router

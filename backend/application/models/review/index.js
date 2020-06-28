@@ -1,27 +1,7 @@
-const ReviewSchema = new MongooseSchema({
-    comment: {
-        type: String,
-        required: true
-    },
-    type: {
-        type: String,
-        enum: ['bad', 'average', 'good'],
-        default: 'good'
-    },
-    user: {
-        type: ObjectId,
-        ref: 'User'
-    },
-    product: {
-        type: ObjectId,
-        ref: 'Product'
-    },
-    rating: {
-        type: ObjectId,
-        ref: 'Rating'
-    }
-}, {
-    timestamp: true
-})
+const fields = require('./fields');
 
-module.exports = Mongoose.model('Review', ReviewSchema)
+const reviewSchema = SequelizeConnect.define('Review', fields, {
+    tableName: 'review'
+});
+
+module.exports = reviewSchema

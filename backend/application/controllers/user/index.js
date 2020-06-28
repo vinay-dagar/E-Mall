@@ -12,7 +12,11 @@ exports.registerUser = async (req, res, next) => {
 
         const { role } = req.params;
 
-        const existingUser = await domain.User.findByEmailAndPhone({ email, phone })
+        const existingUser = await domain.User.findOne({
+            where: {
+                email: email
+            }
+        })
 
         if (existingUser)
             throw new Error('The Email/Phone already exists please try a different one.')
@@ -30,11 +34,7 @@ exports.registerUser = async (req, res, next) => {
             role
         }
 
-        const user = await new domain.User(userData).save();
-
-        // if (role === 'shopAdmin') {
-        //     await new domain.Shop({ name: user.name, user: user }).save()
-        // }
+        const user = await domain.User.create(userData);
 
         return res.status(200).json({
             user,

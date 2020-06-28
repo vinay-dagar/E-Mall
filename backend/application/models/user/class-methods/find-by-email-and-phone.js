@@ -1,10 +1,12 @@
 module.exports = async ({ email, phone }) => {
     try {
         const user = await domain.User.findOne({
-            $or: [
-                { phone },
-                { email },
-            ]
+            where: {
+                $or: [
+                    { phone },
+                    { email },
+                ]
+            }
         })
 
         return user;
