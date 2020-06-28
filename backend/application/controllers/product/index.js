@@ -132,7 +132,13 @@ exports.getOneProduct = async (req, res, next) => {
         const product = await domain.Product.findOne({
             where: {
                 id: productId
-            }
+            },
+            include: [
+                {
+                    model: domain.Rating,
+                    include: [{ model: domain.Review }]
+                }
+            ]
         });
 
         if (!product) {

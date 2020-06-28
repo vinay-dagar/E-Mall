@@ -64,4 +64,8 @@ module.exports = function (domain) {
         foreignKey: 'ratingId'
     })
 
+    domain.Rating.hasOne(domain.Review, {
+        foreignKey: 'ratingId'
+    })
+
 }
