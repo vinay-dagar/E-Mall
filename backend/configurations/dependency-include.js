@@ -21,5 +21,6 @@ const configHolder = {};
 configHolder.jwtUtility = require('../utilities/jwt-utility');
 configHolder.createSecret = require('../utilities/create-secret');
 configHolder.secureUtility = require('../utilities/secure-utility');
+configHolder.randomString = require('../utilities/randomString');
 
 module.exports = configHolder

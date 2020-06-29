@@ -64,9 +64,13 @@ exports.addToWishlist = async (req, res, next) => {
             next(err)
         };
 
-        const { Wishlists } = req.loggedInUser.Customer;
+        const wishlist = await domain.Wishlist.findAll({
+            where: {
+                customerId: req.loggedInUser.Customer.id
+            },
+        })
 
-        const isProductWishlisted = Wishlists.find(a => a.productId === productId)
+        const isProductWishlisted = wishlist.find(a => a.productId == productId)
 
         if (isProductWishlisted) {
             await domain.Wishlist.destroy({
@@ -79,13 +83,35 @@ exports.addToWishlist = async (req, res, next) => {
                 productId,
                 customerId: req.loggedInUser.Customer.id
             }
+            await domain.Wishlist.create(data)
         }
-
-        await domain.Wishlist.create(data)
 
         return res.status(200).json({
             message: `Product successfully ${isProductWishlisted ? 'removed from' : 'added to'} wishlist`
         })
+
+    } catch (err) {
+        next(err)
+    }
+}
+
+exports.getWishlists = async (req, res, next) => {
+    try {
+        const customerId = req.loggedInUser.Customer.id
+
+        if (!customerId) {
+            const err = new Error('Customer not found!')
+            next(err)
+        }
+
+        const wishlist = await domain.Wishlist.findAll({
+            where: {
+                customerId
+            },
+            include: [{ model: domain.Product }]
+        })
+
+        return res.status(200).json({ wishlist })
 
     } catch (err) {
         next(err)

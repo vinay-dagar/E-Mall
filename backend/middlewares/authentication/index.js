@@ -42,7 +42,7 @@ module.exports = async (req, res, next) => {
                     include: [
                         {
                             model: domain.Cart
-                        }
+                        },
                     ]
                 },
             ]

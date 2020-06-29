@@ -82,8 +82,4 @@ module.exports = function (domain) {
         foreignKey: 'customerId'
     })
 
-    domain.Customer.hasMany(domain.Wishlist, {
-        foreignKey: 'customerId'
-    })
-
 }
