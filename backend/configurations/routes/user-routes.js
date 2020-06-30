@@ -13,18 +13,32 @@ router.post('/login',
     // middleware.decrypt,
     validate(validationSchema.user.login, {}, {}),
     controller.authentication.login
-);
+)
+
+//  User Wishlist routes
 
 router.post('/wishlist/:productId',
     middleware.authentication,
     middleware.access.canAccess(['customer']),
     controller.user.addToWishlist
-);
+)
+    .get('/wishlist/get',
+        middleware.authentication,
+        middleware.access.canAccess(['customer']),
+        controller.user.getWishlists
+    )
 
-router.get('/wishlist/get',
+//  User Cart Routes
+
+router.post('/cart/add-to-cart',
     middleware.authentication,
     middleware.access.canAccess(['customer']),
-    controller.user.getWishlists
+    controller.cart.addToCart
 )
+    .post('/cart/remove-product-from-cart',
+        middleware.authentication,
+        middleware.access.canAccess(['customer']),
+        controller.cart.removeProduct
+    )
 
 module.exports = router

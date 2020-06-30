@@ -4,12 +4,8 @@ module.exports = {
         autoIncrement: true,
         primaryKey: true
     },
-    items: {
-        type: Sequelize.INTEGER,
-        defaultValue: 0,
-    },
     totalAmount: {
-        type: Sequelize.TEXT,
+        type: Sequelize.INTEGER,
         defaultValue: 0,
         field: 'total_amount'
     },
@@ -18,8 +14,4 @@ module.exports = {
         field: 'customer_id',
         allowNull: false
     },
-    productId: {
-        type: Sequelize.INTEGER,
-        field: 'product_id',
-    }
 }

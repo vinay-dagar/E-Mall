@@ -21,10 +21,6 @@ exports.login = async (req, res, next) => {
                         {
                             model: domain.Cart
                         },
-                        {
-                            model: domain.Wishlist,
-                            include: [{ model: domain.Product }]
-                        },
                     ]
                 },
                 {

@@ -32,11 +32,19 @@ module.exports = function (domain) {
         foreignKey: 'customer_id'
     });
 
-    domain.Cart.belongsTo(domain.User, {
+    domain.Cart.belongsTo(domain.Customer, {
         foreignKey: 'customer_id'
     });
 
-    domain.Cart.belongsTo(domain.Product, {
+    domain.Cart.hasMany(domain.CartProduct, {
+        foreignKey: 'cartId'
+    });
+
+    domain.CartProduct.belongsTo(domain.Cart, {
+        foreignKey: 'cartId'
+    });
+
+    domain.CartProduct.belongsTo(domain.Product, {
         foreignKey: 'productId'
     })
 

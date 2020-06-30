@@ -3,6 +3,7 @@ const Product = require('./product');
 const Shop = require('./shop');
 const Customer = require('./customer');
 const Cart = require('./cart');
+const CartProduct = require('./cart-product');
 // const Order = require('./order');
 const Review = require('./review');
 const Rating = require('./rating');
@@ -14,6 +15,7 @@ const domain = {
     Product,
     Shop,
     Cart,
+    CartProduct,
     // Order,
     Review,
     Rating,
