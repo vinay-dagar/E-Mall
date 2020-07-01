@@ -46,4 +46,12 @@ router.post('/cart/add-to-cart',
         controller.cart.clearCart
     )
 
+// User Order Routes
+
+router.post('/order/create-order',
+    middleware.authentication,
+    middleware.access.canAccess(['customer']),
+    controller.order.createOrder
+)
+
 module.exports = router
