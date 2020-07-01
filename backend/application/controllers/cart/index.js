@@ -153,3 +153,42 @@ exports.removeProduct = async (req, res, next) => {
     }
 }
 
+exports.clearCart = async (req, res, next) => {
+    try {
+        const customerId = req.loggedInUser.Customer && req.loggedInUser.Customer.id
+
+        const cart = await domain.Cart.findOne({
+            where: {
+                customerId
+            }
+        });
+
+        if (!cart) {
+            const err = new Error('Cart not found!')
+            err.statusCode = 404
+            next(err)
+        }
+
+        await Promise.all([
+            domain.Cart.update({
+                totalAmount: 0,
+            }, {
+                where: {
+                    id: cart.id
+                }
+            }),
+            domain.CartProduct.destroy({
+                where: {
+                    cartId: cart.id
+                }
+            })
+        ])
+
+        return res.status(200).json({
+            message: "Cart successfully cleared!"
+        })
+
+    } catch (err) {
+        next(err)
+    }
+}

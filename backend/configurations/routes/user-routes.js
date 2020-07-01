@@ -40,5 +40,10 @@ router.post('/cart/add-to-cart',
         middleware.access.canAccess(['customer']),
         controller.cart.removeProduct
     )
+    .put('/cart/clear-cart',
+        middleware.authentication,
+        middleware.access.canAccess(['customer']),
+        controller.cart.clearCart
+    )
 
 module.exports = router
